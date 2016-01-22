@@ -16,8 +16,6 @@ class Grid
 		cells.find { |cell| cell.x == x && cell.y == y }
 	end
 
-	private
-
 	def compute_width
 		max_x = cells.map(&:x).max
 		max_x ? max_x + 1 : 0
@@ -28,6 +26,12 @@ class Grid
 		max_y ? max_y + 1 : 0
 	end
 
+  def find_neighbours(cell)
+    %i[left top right bottom top_left top_right bottom_right bottom_left].
+        map { |area| send(area, cell) }.
+        compact
+  end
+
 	private
 
 	def normalize!
@@ -37,4 +41,36 @@ class Grid
 			end
 		end
 	end
+
+  def top(cell)
+    cell_at(cell.x, cell.y - 1)
+  end
+
+  def left(cell)
+    cell_at(cell.x - 1, cell.y)
+  end
+
+  def bottom(cell)
+    cell_at(cell.x, cell.y + 1)
+  end
+
+  def right(cell)
+    cell_at(cell.x + 1, cell.y)
+  end
+
+  def top_left(cell)
+    cell_at(cell.x - 1, cell.y - 1)
+  end
+
+  def top_right(cell)
+    cell_at(cell.x + 1, cell.y - 1)
+  end
+
+  def bottom_right(cell)
+    cell_at(cell.x + 1, cell.y + 1)
+  end
+
+  def bottom_left(cell)
+    cell_at(cell.x - 1, cell.y + 1)
+  end
 end

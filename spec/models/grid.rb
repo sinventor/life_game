@@ -64,4 +64,59 @@ describe Grid do
 			end
 		end
 	end
+
+  describe "movement" do
+    describe "#top" do
+      context "when having top cell" do
+        let(:target_cell) { grid.cell_at(4, 13) }
+        subject { grid.send(:top, target_cell) }
+
+        it "should return top cell" do
+          expect(subject.y).to eq(12)
+        end
+      end
+
+      context "when not having top cell" do
+        let(:target_cell) { grid.cell_at(4, 0) }
+        subject { grid.send(:top, target_cell) }
+
+        it "should return nil" do
+          expect(subject).to be_nil
+        end
+      end
+    end
+
+    describe "#left" do
+      context "when having left cell" do
+        let(:target_cell) { grid.cell_at(4, 13) }
+        subject { grid.send(:left, target_cell) }
+
+        it "should return top cell" do
+          expect(subject.x).to eq(3)
+        end
+      end
+
+      context "when not having left cell" do
+        let(:target_cell) { grid.cell_at(0, 10) }
+        subject { grid.send(:left, target_cell) }
+
+        it "should return nil" do
+          expect(subject).to be_nil
+        end
+      end
+    end
+  end
+
+  describe "#find_neighbours" do
+    let(:target_cell) { grid.cell_at(4, 13) }
+    subject { grid.find_neighbours(target_cell) }
+
+    it "should include left cell" do
+      expect(subject).to include(grid.send(:left, target_cell))
+    end
+
+    it "should include top cell" do
+      expect(subject).to include(grid.send(:top, target_cell))
+    end
+  end
 end
