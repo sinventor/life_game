@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'models/cell'
 
 describe Cell do
 	let (:cell) { Cell.new(5, 3, false) }
@@ -42,7 +43,6 @@ describe Cell do
 			it "should return a coordinate (y)" do
 				expect(subject.y).to eq(cell.y)
 			end
-			
 		end
 	end
 end

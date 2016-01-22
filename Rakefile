@@ -1,0 +1,1 @@
+import 'tasks/spec.rake'
