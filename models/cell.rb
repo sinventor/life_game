@@ -1,6 +1,4 @@
-require './models/base_record/base_record'
-puts BaseRecord.class
-class Cell < BaseRecord::SimpleRecord
+class Cell
 	attr_reader :x, :y, :alive
 
 	def initialize(x, y, alive)
@@ -15,5 +13,11 @@ class Cell < BaseRecord::SimpleRecord
 
 	def dead?
 		!alive?
+	end
+
+	def ==(other)
+		x == other.x &&
+		y == other.y &&
+		alive == other.alive
 	end
 end

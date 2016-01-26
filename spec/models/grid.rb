@@ -119,4 +119,13 @@ describe Grid do
       expect(subject).to include(grid.send(:top, target_cell))
     end
   end
+
+  describe "#==" do
+    let(:first_grid) { grid.dup }
+    let(:second_grid) { all_dead_grid.dup }
+
+    it "return true for same grid" do
+      expect(first_grid).to eq(second_grid)
+    end
+  end
 end

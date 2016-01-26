@@ -2,7 +2,7 @@ class Grid
 	attr_reader :cells, :width, :height
 
 	def initialize(cells)
-		@cells = cells
+		@cells = cells.dup
 		@width = compute_width
 		@height = compute_height
 		normalize!
@@ -30,6 +30,13 @@ class Grid
     %i[left top right bottom top_left top_right bottom_right bottom_left].
         map { |area| send(area, cell) }.
         compact
+  end
+
+  def ==(other)
+    cells.each do |cell|
+      return false if cell != other.cell_at(cell.x, cell.y)
+    end
+    true
   end
 
 	private
