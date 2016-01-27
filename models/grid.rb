@@ -1,3 +1,8 @@
+require 'csv'
+require './models/cell'
+require './overrides/nil_class'
+require './overrides/string'
+
 class Grid
 	attr_reader :cells, :width, :height
 
@@ -68,6 +73,14 @@ class Grid
       return false if cell != other.cell_at(cell.x, cell.y)
     end
     true
+  end
+
+  def self.from_file(file)
+    cells = []
+    CSV.foreach(file, headers: true) do |row|
+      cells << Cell.new(row['x'].to_i, row['y'].to_i, row['alive'].to_bool)
+    end
+    self.new(cells)
   end
 
 	private
