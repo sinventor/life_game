@@ -29,7 +29,7 @@ class Game
 
   def self.find(number)
     file = "#{RESOURCE_FILE_PATH}#{FILE_SEPARATOR}configuration_#{number}.#{FILE_EXTENSION}"
-    throw :ConfigurationFileNotFoundError unless File.exists?(file)
+    raise ConfigurationFileNotFoundError, file unless File.exists?(file)
     self.new(Grid.from_file(file))
   end
 
