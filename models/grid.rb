@@ -32,7 +32,38 @@ class Grid
         compact
   end
 
+  def extract_alive_neigbours(cell)
+    all_neighbours = find_neighbours(cell)
+    all_neighbours.find_all { |cell| cell.alive? }
+  end
+
+  def next_state
+    new_cells = cells.map do |cell|
+      # neigbours_for_cell = find_neighbours(cell)
+      # alive_neigbours_for_cell = neigbours_for_cell.find_all { |cell| cell.alive? }
+      if cell.alive?
+        kill?(cell) ? Cell.new(cell.x, cell.y, false) : cell.dup
+      else
+        reproduce?(cell) ? Cell.new(cell.x, cell.y, true) : cell.dup
+      end
+    end
+    self.class.new(new_cells)
+  end
+
+  def kill?(cell)
+    alive_neighbour_cells = extract_alive_neigbours(cell)
+    !alive_neighbour_cells.count.between?(2, 3)
+  end
+
+  def reproduce?(cell)
+    alive_neighbour_cells = extract_alive_neigbours(cell)
+    alive_neighbour_cells.count == 3
+  end
+
   def ==(other)
+    return false if !other.is_a?(self.class)    ||
+                    other.width != self.width || 
+                    other.height != self.height
     cells.each do |cell|
       return false if cell != other.cell_at(cell.x, cell.y)
     end

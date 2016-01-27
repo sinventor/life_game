@@ -1,0 +1,2 @@
+class CellsController < BaseController
+end
