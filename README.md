@@ -10,7 +10,12 @@
 ## Как это выглядит?
 
 Данный вариант предназначен для запуска через консоль, примерный вид которой выглядит следующим образом.
-![main_menu.png](https://github.com/sinventor/life_game/blob/master/images/main_menu.png)
+
+<div style="text-align:center" markdown="1">
+
+  ![main_menu.png](https://github.com/sinventor/life_game/blob/master/images/main_menu.png)
+
+</div>
 
 Пользователь может выбрать скоуп, который ему нужен, соотвтетственно, нажимая клавишу, которая указана в меню.
 ![games_scope.png](https://github.com/sinventor/life_game/blob/master/images/games_scope.png)
@@ -22,6 +27,9 @@
 
 Для демонстрации игрового процесса был создан скрипт, записывающий игровой процесс непосредственно в *gif* файл.
 Запись в файл производился при помощи джема [RMagick](https://rubygems.org/gems/rmagick/). Далее представлены несколько примеров для различных первоначальных конифгураций.
+
 ![demonstration_7.gif](https://github.com/sinventor/life_game/blob/master/images/demos/demonstration_7.gif)
+
 ![demonstration_8.gif](https://github.com/sinventor/life_game/blob/master/images/demos/demonstration_8.gif)
+
 ![demonstration_9.gif](https://github.com/sinventor/life_game/blob/master/images/demos/demonstration_9.gif)
