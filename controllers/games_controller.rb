@@ -2,27 +2,29 @@ require './models/grid'
 require './models/game'
 require './controllers/base_controller'
 require './views/game_view'
+require './errors/configuration_file_not_found_error'
 
 class GamesController < BaseController
   CHOICES = [
     {
-      key: 1,
+      key: 3,
       value: 'Показать доску'
     },
     {
-      key: 2,
+      key: 4,
       value: 'Запустить игровой процесс'
     },
     {
-      key: 3,
-      value: 'Выйти'
+      key: 5,
+      value: 'Выбрать новый файл конфигурации'
     }
   ]
 
   def show(number)
     @game = Game.find(number)
     render GameView, :display, game: @game
-    start
+  rescue ConfigurationFileNotFoundError => e
+    render BaseView, :puts_output, e.message
   end
 
   def run(number)
@@ -34,20 +36,30 @@ class GamesController < BaseController
       render GameView, :display, game: @game
     end
 
-    puts "Количество раундов: #{@game.round_count}"
-    puts "Причина завершения: #{@game.finish_reason}"
-    start
+    render BaseView, :puts_output, "Количество раундов: #{@game.round_count}"
+    render BaseView, :puts_output, "Причина завершения: #{@game.finish_reason}"
   end
 
   def start
-    choice = take_choice(CHOICES)
+    choice = take_choice(choices)
     case choice
-    when "1"
-      show(1)
+    when "3"
+      show(@number && @number.to_i || 1)
+      start
+    when "4"
+      run(@number && @number.to_i || 1)
+      start
+    when "5"
+      @number = take_single_choice("Выберите номер файла: ")
+      start
     when "2"
-      run 1
+      BaseView.puts_output("Выход из скоупа games")
     else
-      exit
+      "q"
     end
+  end
+
+  def choices
+    super + CHOICES
   end
 end

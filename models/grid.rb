@@ -44,8 +44,6 @@ class Grid
 
   def next_state
     new_cells = cells.map do |cell|
-      # neigbours_for_cell = find_neighbours(cell)
-      # alive_neigbours_for_cell = neigbours_for_cell.find_all { |cell| cell.alive? }
       if cell.alive?
         kill?(cell) ? Cell.new(cell.x, cell.y, false) : cell.dup
       else
@@ -81,6 +79,15 @@ class Grid
       cells << Cell.new(row['x'].to_i, row['y'].to_i, row['alive'].to_bool)
     end
     self.new(cells)
+  end
+
+  def self.write_to_file(file, cells)
+    # cells = [Cell.new(4, 6, true)]
+    CSV.open(file, 'w', write_headers: true, headers: ['x', 'y', 'alive']) do |csv|
+      cells.each do |cell|
+        csv << [cell.x, cell.y, cell.alive ? 't' : 'f']
+      end
+    end
   end
 
 	private

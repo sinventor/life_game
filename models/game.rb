@@ -2,9 +2,10 @@ require './models/grid'
 require './errors/configuration_file_not_found_error'
 
 class Game
-  attr_reader :current_grid, :history, :round_count, :finish_reason
+  attr_reader :current_grid, :previous_grid, :history, :round_count, :finish_reason
   RESOURCE_FILE_PATH = 'file_samples'
-  FILE_SEPARATOR = File::Separator
+  USER_FILE_PATH = 'user_files'
+  SEPARATOR = File::Separator
   FILE_EXTENSION = 'csv'
 
   def initialize(grid)
@@ -28,8 +29,9 @@ class Game
   end
 
   def self.find(number)
-    file = "#{RESOURCE_FILE_PATH}#{FILE_SEPARATOR}configuration_#{number}.#{FILE_EXTENSION}"
-    raise ConfigurationFileNotFoundError, file unless File.exists?(file)
+    file = "#{RESOURCE_FILE_PATH}#{SEPARATOR}configuration_#{number}.#{FILE_EXTENSION}"
+    file = "#{USER_FILE_PATH}#{SEPARATOR}configuration_#{number}.#{FILE_EXTENSION}" unless File.exists?(file)
+    raise ConfigurationFileNotFoundError unless File.exists?(file)
     self.new(Grid.from_file(file))
   end
 
