@@ -4,6 +4,7 @@ require './errors/configuration_file_not_found_error'
 
 describe GridsController do
   let(:instance) { GridsController.new }
+  
   describe "#show" do
     context "when file exist" do
       before do

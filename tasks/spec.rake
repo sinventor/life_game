@@ -32,4 +32,4 @@ namespace :controllers do
 	task :all => [:game, :grid]
 end
 
-task :default => "models:all"
+task :default => ["models:all", "controllers:all"]

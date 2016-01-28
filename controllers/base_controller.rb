@@ -5,6 +5,10 @@ class BaseController
     view.send(method, locals)
   end
 
+  def render_alert(message)
+    render BaseView, :alert_message, message: message
+  end
+
   def take_choice(variants)
     variants.each do |variant|
       BaseView.colorize_output("#{variant[:key]} - #{variant[:value]}")

@@ -23,8 +23,8 @@ class GamesController < BaseController
   def show(number)
     @game = Game.find(number)
     render GameView, :display, game: @game
-  rescue ConfigurationFileNotFoundError => e
-    render BaseView, :puts_output, e.message
+  rescue ConfigurationFileNotFoundError
+    render_alert "Конфигурации с номером #{number} не существует"
   end
 
   def run(number)
@@ -38,6 +38,8 @@ class GamesController < BaseController
 
     render BaseView, :puts_output, "Количество раундов: #{@game.round_count}"
     render BaseView, :puts_output, "Причина завершения: #{@game.finish_reason}"
+  rescue ConfigurationFileNotFoundError
+    render_alert "Конфигурации с номером #{number} не существует"
   end
 
   def start

@@ -57,7 +57,7 @@ class GridsController < BaseController
       number = take_single_choice('Введите номер файла: ')
       number = number && number.to_i || 1
       show(number)
-      render BaseView, :puts_output, "\tДоска ##{number}"
+      render BaseView, :puts_output, "Доска ##{number}"
       start
     when "2"
       BaseView.puts_output("Выход из скоупа grids")

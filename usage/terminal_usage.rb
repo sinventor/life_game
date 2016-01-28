@@ -33,7 +33,7 @@ def show_menu
   end
 end
 # show_menu
-until show_menu == "q"
+until show_menu == "q" || show_menu == "quit"
   show_menu
 end
 
