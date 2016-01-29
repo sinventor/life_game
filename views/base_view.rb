@@ -39,7 +39,7 @@ class BaseView
         drawing_cell = board.cell_at(j, i)
 
         if drawing_cell && drawing_cell.alive?
-          print "\e[41m \e[m"
+          print "\e[41m*\e[m"
         else
           print "_"
         end

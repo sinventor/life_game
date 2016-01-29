@@ -11,13 +11,12 @@ include Magick
 @cell_d = 20
 @drawing_d = 16
 
-@configuration_file = 'file_samples/configuration_9.csv'
-@drawing_file = 'images/demos/demonstration_9.gif'
+@configuration_file = 'file_samples/configuration_10.csv'
+@drawing_file = 'images/demos/test/demonstration_10.gif'
 
 def add_to_image(grid, round_number=nil)
   draw = Draw.new
   build_grid(draw, grid)
-
   img = Image.new(grid.width * 20 + 40, grid.height * 20 + 100)
   draw.annotate(img, 200, 30, @margin[:left] + 20, grid.height * @cell_d + @margin[:left] + 20, "Номер раунда: #{round_number}") if round_number
   draw.draw(img)
@@ -25,7 +24,7 @@ def add_to_image(grid, round_number=nil)
 end
 
 def add_cyclic_frame_with_annotate(grid, reason)
-  100.times do
+  10.times do
     draw = Draw.new
     build_grid(draw, grid)
     img = Image.new(grid.width * @cell_d + @margin[:left] * 2, grid.height * @cell_d + @margin[:top] * 2 + 80)
@@ -38,18 +37,22 @@ end
 def build_grid(draw, grid)
   grid.height.times do |row|
     grid.width.times do |col|
+      draw.fill 'black'
       draw.line(col * @cell_d + @margin[:left], @margin[:top],
-                col * @cell_d + @margin[:left], grid.height * 20 + @margin[:top])
+                col * @cell_d + @margin[:left], grid.height * @cell_d + @margin[:top])
     end
+
     draw.line(@margin[:left], row * @cell_d + @margin[:top],
-              grid.width * @cell_d + @margin[:left], row * @cell_d + @margin[:top])
+            grid.width * @cell_d + @margin[:left], row * @cell_d + @margin[:top])
   end
+
   draw.line(grid.width * @cell_d + @margin[:left], @margin[:top],
             grid.width * @cell_d + @margin[:left], grid.height * @cell_d + @margin[:top])
   draw.line(@margin[:left], grid.height * @cell_d + @margin[:top],
             grid.width * @cell_d + @margin[:left], grid.height * @cell_d + @margin[:top])
-  draw.fill '#e891a3'
-  grid.cells.each do |cell|
+
+  grid.cells.each do |cell|  
+    draw.fill '#e891a3'
     left_indent = get_left_indent(cell.x * @cell_d, @cell_d, @drawing_d)
     right_indent = get_right_indent(cell.x * @cell_d, @cell_d, @drawing_d)
     top_indent = get_top_indent(cell.y * @cell_d, @cell_d, @drawing_d)
@@ -69,7 +72,7 @@ def get_left_indent(x, cell_width, drawing_width)
 end
 
 def get_right_indent(x, cell_width, drawing_width)
-  return x if drawing_width >= cell_width
+  return x + cell_width if drawing_width >= cell_width
   x + (cell_width - drawing_width) / 2 + drawing_width
 end
 
@@ -79,7 +82,7 @@ def get_top_indent(y, cell_height, drawing_height)
 end
 
 def get_bottom_indent(y, cell_height, drawing_height)
-  return y if drawing_height >= cell_height
+  return y + cell_height if drawing_height >= cell_height
   y + (cell_height - drawing_height) / 2 + drawing_height
 end
 
